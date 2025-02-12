@@ -72,6 +72,8 @@ class MainActivity : AppCompatActivity() {
     {
         score = _score;
 
+        // vari = (condition) ? true : false;
+
         findViewById<ImageView>(R.id.you_won_image).visibility = if (score > 5) View.VISIBLE else View.INVISIBLE;
 
         findViewById<TextView>(R.id.score_text).text = "Score: $score"
