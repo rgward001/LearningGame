@@ -32,6 +32,21 @@ class MainActivity : AppCompatActivity() {
         setScore(0)
     }
 
+    fun radioButtonOnClick(view: View)
+    {
+        if (view.id == R.id.radioButton){
+            findViewById<TextView>(R.id.score_text).text = "R.id.radioButton"
+        }
+
+        if (view.id == R.id.radioButton2){
+            findViewById<TextView>(R.id.score_text).text = "R.id.radioButton2"
+        }
+
+        if (view.id == R.id.radioButton3){
+            findViewById<TextView>(R.id.score_text).text = "R.id.radioButton3"
+        }
+    }
+
     fun leftButtonOnClick(view: View)
     {
         if (leftNum > rightNum)
