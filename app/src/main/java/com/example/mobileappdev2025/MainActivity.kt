@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +17,8 @@ import java.util.Random
 data class WordDefinition(val word: String, val definition: String);
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var myAdapter : ArrayAdapter<String>;
-    private  var dataDefList = ArrayList<String>();
+    private lateinit var myAdapter : ArrayAdapter<String>; // connect from data to gui
+    private var dataDefList = ArrayList<String>(); // data
     private var wordDefinition = mutableListOf<WordDefinition>();
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,5 +58,45 @@ class MainActivity : AppCompatActivity() {
                 "green def"
             )
         );
+
+        wordDefinition.add(
+            WordDefinition(
+                "orange",
+                "orange def"
+            )
+        );
+
+        pickNewWordAndLoadDataList();
+        setupList();
+
+        val defList = findViewById<ListView>(R.id.dynamic_def_list);
+        defList.setOnItemClickListener { _, _, index, _ ->
+            pickNewWordAndLoadDataList();
+            myAdapter.notifyDataSetChanged();
+        };
+    }
+
+    private fun pickNewWordAndLoadDataList()
+    {
+        wordDefinition.shuffle();
+
+        dataDefList.clear();
+
+        for(wd in wordDefinition){
+            dataDefList.add(wd.definition);
+        }
+
+        findViewById<TextView>(R.id.word).text = wordDefinition[0].word;
+
+        dataDefList.shuffle();
+    }
+
+    private fun setupList()
+    {
+        myAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataDefList);
+
+        // connect to list
+        val defList = findViewById<ListView>(R.id.dynamic_def_list);
+        defList.adapter = myAdapter;
     }
 }
