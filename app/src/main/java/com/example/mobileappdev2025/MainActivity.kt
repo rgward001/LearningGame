@@ -18,9 +18,13 @@ import java.util.Random
 data class WordDefinition(val word: String, val definition: String);
 
 class MainActivity : AppCompatActivity() {
+    private val ADD_WORD_CODE = 1234; // 1-65535
     private lateinit var myAdapter : ArrayAdapter<String>; // connect from data to gui
     private var dataDefList = ArrayList<String>(); // data
     private var wordDefinition = mutableListOf<WordDefinition>();
+    private var score : Int = 1;
+    private var totalCorrect : Int = 2;
+    private var totalWrong : Int = 3;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +108,9 @@ class MainActivity : AppCompatActivity() {
     fun openStats(view : View)
     {
         var myIntent = Intent(this, StatsActivity::class.java);
+        myIntent.putExtra("score", score.toString());
+        myIntent.putExtra("totalCorrect", totalCorrect.toString());
+        myIntent.putExtra("totalWrong", totalWrong.toString());
         startActivity(myIntent)
     }
 }

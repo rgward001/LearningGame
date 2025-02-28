@@ -1,6 +1,7 @@
 package com.example.mobileappdev2025
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,5 +17,15 @@ class StatsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val score = intent.getStringExtra("score")?:"SCORE NOT FOUND";
+        val totalCorrect = intent.getStringExtra("totalCorrect")?:"TOTAL CORRECT NOT FOUND";
+        val totalWrong = intent.getStringExtra("totalWrong")?:"TOTAL WRONG NOT FOUND";
+
+        findViewById<TextView>(R.id.score_text).text = "Score : " + score;
+        findViewById<TextView>(R.id.correct_text).text = "Correct Count : " + totalCorrect;
+        findViewById<TextView>(R.id.wrong_text).text = "Incorrect Count : " + totalWrong;
+
+        // finish(); // used the pop the activity stack
     }
 }
