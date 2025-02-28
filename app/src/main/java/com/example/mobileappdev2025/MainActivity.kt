@@ -1,5 +1,6 @@
 package com.example.mobileappdev2025
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -98,5 +99,11 @@ class MainActivity : AppCompatActivity() {
         // connect to list
         val defList = findViewById<ListView>(R.id.dynamic_def_list);
         defList.adapter = myAdapter;
+    }
+
+    fun openStats(view : View)
+    {
+        var myIntent = Intent(this, StatsActivity::class.java);
+        startActivity(myIntent)
     }
 }
