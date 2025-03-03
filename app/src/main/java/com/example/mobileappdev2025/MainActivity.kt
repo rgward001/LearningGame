@@ -81,6 +81,23 @@ class MainActivity : AppCompatActivity() {
         };
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == ADD_WORD_CODE && resultCode == RESULT_OK && data != null){
+            val word = data.getStringExtra("word")?:""
+            val def = data.getStringExtra("def")?:""
+
+            if ( word == "" || def == "")
+                return
+
+            wordDefinition.add(WordDefinition(word, def))
+
+            pickNewWordAndLoadDataList()
+        }
+    }
+
     private fun pickNewWordAndLoadDataList()
     {
         wordDefinition.shuffle();
@@ -112,5 +129,11 @@ class MainActivity : AppCompatActivity() {
         myIntent.putExtra("totalCorrect", totalCorrect.toString());
         myIntent.putExtra("totalWrong", totalWrong.toString());
         startActivity(myIntent)
+    }
+
+    fun openAddWord(view : View)
+    {
+        var myIntent = Intent(this, AddWordActivity::class.java);
+        startActivityForResult(myIntent, ADD_WORD_CODE)
     }
 }
