@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.Random
+import java.util.Scanner
 
 data class WordDefinition(val word: String, val definition: String);
 
@@ -36,40 +37,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        wordDefinition.add(
-            WordDefinition(
-                "red",
-                "red def"
-            )
-        );
-
-        wordDefinition.add(
-            WordDefinition(
-                "yellow",
-                "yellow def"
-            )
-        );
-
-        wordDefinition.add(
-            WordDefinition(
-                "blue",
-                "blue def"
-            )
-        );
-
-        wordDefinition.add(
-            WordDefinition(
-                "green",
-                "green def"
-            )
-        );
-
-        wordDefinition.add(
-            WordDefinition(
-                "orange",
-                "orange def"
-            )
-        );
+        loadWordsFromDisk()
 
         pickNewWordAndLoadDataList();
         setupList();
@@ -89,12 +57,26 @@ class MainActivity : AppCompatActivity() {
             val word = data.getStringExtra("word")?:""
             val def = data.getStringExtra("def")?:""
 
+            Log.d("MAD", word)
+            Log.d("MAD", def)
+
             if ( word == "" || def == "")
                 return
 
             wordDefinition.add(WordDefinition(word, def))
 
             pickNewWordAndLoadDataList()
+            myAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun loadWordsFromDisk()
+    {
+        val reader = Scanner(resources.openRawResource(R.raw.default_words))
+        while(reader.hasNextLine()){
+            val line = reader.nextLine()
+            val wd = line.split("|")
+            wordDefinition.add(WordDefinition(wd[0], wd[1]))
         }
     }
 
