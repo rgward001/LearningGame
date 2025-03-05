@@ -13,6 +13,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.io.File
+import java.io.FileInputStream
 import java.util.Random
 import java.util.Scanner
 
@@ -72,11 +74,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadWordsFromDisk()
     {
-        val reader = Scanner(resources.openRawResource(R.raw.default_words))
-        while(reader.hasNextLine()){
-            val line = reader.nextLine()
-            val wd = line.split("|")
-            wordDefinition.add(WordDefinition(wd[0], wd[1]))
+        // user data
+        val file = File(applicationContext.filesDir, "user_data.csv")
+
+        if (file.exists()) {
+            val readResult = FileInputStream(file)
+            val scanner = Scanner(readResult)
+
+            while(scanner.hasNextLine()){
+                val line = scanner.nextLine()
+                val wd = line.split("|")
+                wordDefinition.add(WordDefinition(wd[0], wd[1]))
+            }
+        } else { // default data
+
+            file.createNewFile()
+
+            val reader = Scanner(resources.openRawResource(R.raw.default_words))
+            while(reader.hasNextLine()){
+                val line = reader.nextLine()
+                val wd = line.split("|")
+                wordDefinition.add(WordDefinition(wd[0], wd[1]))
+                file.appendText("${wd[0]}|${wd[1]}\n")
+            }
         }
     }
 
