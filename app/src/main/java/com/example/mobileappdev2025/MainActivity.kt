@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var myAdapter : ArrayAdapter<String>; // connect from data to gui
     private var dataDefList = ArrayList<String>(); // data
     private var wordDefinition = mutableListOf<WordDefinition>();
-    private var score : Int = 1;
-    private var totalCorrect : Int = 2;
-    private var totalWrong : Int = 3;
+    private var score : Int = 0;
+    private var totalCorrect : Int = 0;
+    private var totalWrong : Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,8 +106,8 @@ class MainActivity : AppCompatActivity() {
 
         dataDefList.clear();
 
-        for(wd in wordDefinition){
-            dataDefList.add(wd.definition);
+        for(wd in 0..3){
+            dataDefList.add(wordDefinition[wd].definition);
         }
 
         findViewById<TextView>(R.id.word).text = wordDefinition[0].word;
