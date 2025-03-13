@@ -21,10 +21,14 @@ class StatsActivity : AppCompatActivity() {
         val score = intent.getStringExtra("score")?:"SCORE NOT FOUND";
         val totalCorrect = intent.getStringExtra("totalCorrect")?:"TOTAL CORRECT NOT FOUND";
         val totalWrong = intent.getStringExtra("totalWrong")?:"TOTAL WRONG NOT FOUND";
+        val totalStreak = intent.getStringExtra("totalStreak")?:"TOTAL CORRECT NOT FOUND";
+        val highestStreak = intent.getStringExtra("highestStreak")?:"TOTAL WRONG NOT FOUND";
 
         findViewById<TextView>(R.id.score_text).text = "Score : " + score;
         findViewById<TextView>(R.id.correct_text).text = "Correct Count : " + totalCorrect;
         findViewById<TextView>(R.id.wrong_text).text = "Incorrect Count : " + totalWrong;
+        findViewById<TextView>(R.id.streak_text).text = "Current Streak : " + totalStreak;
+        findViewById<TextView>(R.id.highest_text).text = "Highest Streak : " + highestStreak;
 
         // finish(); // used the pop the activity stack
     }

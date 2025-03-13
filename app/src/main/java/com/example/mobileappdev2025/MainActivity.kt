@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private var score : Int = 0;
     private var totalCorrect : Int = 0;
     private var totalWrong : Int = 0;
+    private var totalStreak : Int = 0;
+    private var highestStreak : Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,21 @@ class MainActivity : AppCompatActivity() {
 
         val defList = findViewById<ListView>(R.id.dynamic_def_list);
         defList.setOnItemClickListener { _, _, index, _ ->
+            val selectedDefinition = dataDefList[index];
+            val correctDefinition = wordDefinition[0].definition;
+
+            if (selectedDefinition == correctDefinition) {
+                totalStreak++;
+                score += totalStreak;
+                totalCorrect++;
+                if (totalStreak > highestStreak) {
+                    highestStreak = totalStreak;
+                }
+            } else {
+                totalWrong++;
+                totalStreak = 0;
+            }
+
             pickNewWordAndLoadDataList();
             myAdapter.notifyDataSetChanged();
         };
@@ -124,12 +141,14 @@ class MainActivity : AppCompatActivity() {
         defList.adapter = myAdapter;
     }
 
-    fun openStats(view : View)
+    fun openStats(view: View)
     {
-        var myIntent = Intent(this, StatsActivity::class.java);
-        myIntent.putExtra("score", score.toString());
-        myIntent.putExtra("totalCorrect", totalCorrect.toString());
-        myIntent.putExtra("totalWrong", totalWrong.toString());
+        val myIntent = Intent(this, StatsActivity::class.java)
+        myIntent.putExtra("score", score.toString())
+        myIntent.putExtra("totalCorrect", totalCorrect.toString())
+        myIntent.putExtra("totalWrong", totalWrong.toString())
+        myIntent.putExtra("totalStreak", totalStreak.toString())
+        myIntent.putExtra("highestStreak", highestStreak.toString())
         startActivity(myIntent)
     }
 
