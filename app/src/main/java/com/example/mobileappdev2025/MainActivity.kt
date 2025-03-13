@@ -84,6 +84,12 @@ class MainActivity : AppCompatActivity() {
 
             wordDefinition.add(WordDefinition(word, def))
 
+            val file = File(applicationContext.filesDir, "user_data.csv");
+            file.appendText("${word}|${def}\n");
+
+            val fileContent = file.readText();
+            Log.d("Test", fileContent)
+
             pickNewWordAndLoadDataList()
             myAdapter.notifyDataSetChanged()
         }
